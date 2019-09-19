@@ -18,9 +18,22 @@ namespace UnityStandardAssets.Utility
 
 
         // Update is called once per frame
-        private void Update()
+        /*private void Update()
         {
             float deltaTime = Time.deltaTime;
+            if (ignoreTimescale)
+            {
+                deltaTime = (Time.realtimeSinceStartup - m_LastRealTime);
+                m_LastRealTime = Time.realtimeSinceStartup;
+            }
+            transform.Translate(moveUnitsPerSecond.value*deltaTime, moveUnitsPerSecond.space);
+            transform.Rotate(rotateDegreesPerSecond.value*deltaTime, moveUnitsPerSecond.space);
+        }*/
+
+		// Update is called once per frame
+        private void FixedUpdate()
+        {
+            float deltaTime = Time.fixedDeltaTime;
             if (ignoreTimescale)
             {
                 deltaTime = (Time.realtimeSinceStartup - m_LastRealTime);

@@ -11,7 +11,7 @@ public class packUp : MonoBehaviour
     int isshow = 0;
     void Start()
     {
-        prompts.transform.position =new Vector3(-110,197.7f,0);
+        prompts.transform.position =new Vector3(-110,557.7f,0);
         packUpButton.SetActive(true);
         ddescriptions.text = "展开";
 
