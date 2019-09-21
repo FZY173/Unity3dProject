@@ -41,6 +41,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        //上下最大视角（Y视角）  
+        public float minmumX = -15f;
+        public float maxmunX = 15f;
+
+        public float minmumY = -30f;
+        public float maxmunY = 30f;
+
+        float rotationY = 0f;
+        float rotationX = 0f;
+
+        public float sensitivityX = 10.0f;
+        public float sensitivityY = 10.0f;
 
         // Use this for initialization
         private void Start()
@@ -54,19 +66,40 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_NextStep = m_StepCycle/2f;
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
-			m_MouseLook.Init(transform , m_Camera.transform);
+            m_MouseLook.Init(transform , m_Camera.transform);
+        }
+
+
+        public float Clamp(float value, float max, float min)
+        {
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
         }
 
 
         // Update is called once per frame
         private void Update()
         {
+
+            //根据鼠标移动的快慢（增量），获得相机左右旋转的角度（处理X）  
+            rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+
+            //根据鼠标移动的快慢（增量），获取相机上下移动的角度（处理Y）  
+            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+            //角度限制，rotationY小于min返回min  大于max 返回max  否则返回value  
+            rotationY = Clamp(rotationY, maxmunY, minmumY);
+            rotationX = Clamp(rotationX, maxmunX, minmumX);
+
+            //设置摄像机角度  
+            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump)
+           /* if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            }
+            }*/
 
             if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
             {
@@ -115,8 +148,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                 if (m_Jump)
                 {
-                    m_MoveDir.y = m_JumpSpeed;
-                    PlayJumpSound();
+                   /* m_MoveDir.y = m_JumpSpeed;*/
+                  /*  PlayJumpSound();*/
                     m_Jump = false;
                     m_Jumping = true;
                 }

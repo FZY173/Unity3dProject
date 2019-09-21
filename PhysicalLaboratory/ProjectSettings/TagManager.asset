@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - obi
+  - wall
+  - famar01
+  - famar02
+  - famar03
+  - famar04
+  - door2
+  - door1
   layers:
   - Default
   - TransparentFX
