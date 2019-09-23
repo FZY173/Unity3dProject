@@ -12,13 +12,13 @@ Shader "Hidden/PrepareSunShaftsBlur" {
 	#include "UnityCG.cginc"
 	
 	struct v2f {
-		float4 pos : POSITION;
+		float4 pos : SV_POSITION;
 		float2 uv : TEXCOORD0;
 	};
 	
 	sampler2D _MainTex;
 	sampler2D _Skybox; 
-	sampler2D _CameraDepthTexture;
+	sampler2D_float _CameraDepthTexture;
 	
 	uniform half _NoSkyBoxMask;
 	uniform half4 _SunPosition; 
@@ -34,8 +34,8 @@ Shader "Hidden/PrepareSunShaftsBlur" {
 		return max (skyboxValue.a, _NoSkyBoxMask * dot (skyboxValue.rgb, float3 (0.59,0.3,0.11))); 		
 	}
 	
-	half4 frag (v2f i) : COLOR {
-		float depthSample = tex2D (_CameraDepthTexture, i.uv.xy).x;
+	half4 frag (v2f i) : SV_Target {
+		float depthSample = SAMPLE_DEPTH_TEXTURE( _CameraDepthTexture, i.uv.xy);
 		half4 tex = tex2D (_MainTex, i.uv.xy);
 		
 		depthSample = Linear01Depth (depthSample);
@@ -53,7 +53,7 @@ Shader "Hidden/PrepareSunShaftsBlur" {
 		return outColor;
 	}
 	
-	half4 fragNoDepthNeeded (v2f i) : COLOR {
+	half4 fragNoDepthNeeded (v2f i) : SV_Target {
 		float4 sky = (tex2D (_Skybox, i.uv.xy));
 		float4 tex = (tex2D (_MainTex, i.uv.xy));
 		
@@ -74,7 +74,6 @@ Shader "Hidden/PrepareSunShaftsBlur" {
 Subshader {
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
       
@@ -85,7 +84,6 @@ Subshader {
   }
   Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
       

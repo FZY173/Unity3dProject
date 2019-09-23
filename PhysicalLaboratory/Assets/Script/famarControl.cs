@@ -32,6 +32,8 @@ public class famarControl : MonoBehaviour
     {
     }
 
+   
+
     public void DefineFamar()
     {
         /* for (int i = 0; i < Parent.transform.childCount; i++)
@@ -85,6 +87,6 @@ public class famarControl : MonoBehaviour
         Mass = mass;
         FindObjectOfType<startReset>().force = (Mass/100f) * 10;
         famarMass.text = "砝码质量：" + Mass/100f + "kg";
-        Debug.Log((Mass / 100f) * 10);
+       // Debug.Log((Mass / 100f) * 10);
     }
 }

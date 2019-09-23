@@ -5,4 +5,5 @@ using UnityEngine;
 public static class Define 
 {
        public static int currentIndex = 0;
+    public static int currtentData =0;
 }

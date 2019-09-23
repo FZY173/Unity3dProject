@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+
+
 
 public class Move : MonoBehaviour
 {
@@ -11,29 +13,37 @@ public class Move : MonoBehaviour
     private float speed;
     private float speedCount;
 
-    public float speedFirst =0;
-    public float speedSecont =0;
+    public double speedFirst =0;
+    public double speedSecont =0;
 
     public Text doorSpeed1;
     public Text doorSpeed2;
+
+    public GameObject door1;
+    public GameObject door2;
+    private double position;
+    decimal result;
+
+
+    public bool start =true;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        position = door2.transform.position.z - door1.transform.position.z;
     }
 
     // Update is called once per frame
+
     void FixedUpdate()
     {
-
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(0, 0.0f, moveHorizontal);
-
-        transform.position += movement*0.01f;
         speedCount = this.GetComponent<Rigidbody>().velocity.z;
         speed = speedCount / 100f;
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+          calculate();
+        }
 
     }
     /*
@@ -59,15 +69,17 @@ public class Move : MonoBehaviour
             FindObjectOfType<startReset>().isRotation = true;
         }
 
-        if (other.gameObject.CompareTag("wall"))
+        if (other.gameObject.CompareTag("wall")&& start)
         {
             FindObjectOfType<startReset>().isRotation = false;
+            FindObjectOfType<report>().fillingData();
+            start = false;
         }
 
         if (other.gameObject.CompareTag("door2"))
         {
             speedSecont = speedCount;
-            doorSpeed2.text = speedSecont.ToString();
+            doorSpeed2.text = speedSecont.ToString();     
             // Debug.Log(speedSecont);
         }
 
@@ -75,6 +87,7 @@ public class Move : MonoBehaviour
         {
             speedFirst = speedCount;
             doorSpeed1.text = speedFirst.ToString();
+            start = true;
          //   Debug.Log(speedFirst);
         }
     }
@@ -87,4 +100,17 @@ public class Move : MonoBehaviour
             //obj_2.transform.localScale += new Vector3(0, 0, 0.001f);
         }
     }*/
+
+    public double calculate()
+    {
+      //  double a = (Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position);
+        // Acceleration.Add();
+      //  Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)));
+      //  Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position));
+        Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position));
+        // decimal b = Math.Round((decimal)a, 1, MidpointRounding.AwayFromZero);
+        //DecimalMath.Pow(val1, val2);
+        //Debug.Log(b);
+        return (Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position);
+    }
 }

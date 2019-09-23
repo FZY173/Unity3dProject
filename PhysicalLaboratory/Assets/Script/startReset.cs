@@ -28,6 +28,8 @@ public class startReset : MonoBehaviour
 
 
 
+
+
     void Start()
     {
         //car.GetComponent<ConstantForce>().force = new Vector3(0, 0, 0);
@@ -51,14 +53,24 @@ public class startReset : MonoBehaviour
         }
 
 
+       
+    }
+
+    public void carStart() {
+        if (FindObjectOfType<famarControl>().Mass != 0)
+        {
+            isMove = !isMove;
+        }
+
         if (isMove)
         {
             text.text = "重置";
             car.GetComponent<ConstantForce>().force = new Vector3(0, 0, force);
             pallet.GetComponent<ConstantForce>().force = new Vector3(0, -force, 0);
         }
-        else {
-           // car.transform.localPosition = new Vector3(-42.09993f, 9.929489f, -3.725288e-06f);
+        else
+        {
+            // car.transform.localPosition = new Vector3(-42.09993f, 9.929489f, -3.725288e-06f);
             car.transform.localPosition = carPosition;
             pallet.transform.position = palletPosition;
             text.text = "开始";
@@ -69,14 +81,7 @@ public class startReset : MonoBehaviour
             //尺寸
             Rope_x.transform.localScale = rope_xScale;
             Rope_y.transform.localScale = rope_yScale;
-
         }
     }
 
-    public void carStart() {
-        if (FindObjectOfType<famarControl>().Mass != 0)
-        {
-            isMove = !isMove;
-        }
-    }
 }

@@ -10,16 +10,14 @@ Shader "Hidden/LensFlareCreate" {
 	#include "UnityCG.cginc"
 	
 	struct v2f {
-		float4 pos : POSITION;
+		float4 pos : SV_POSITION;
 		float2 uv[4] : TEXCOORD0;
 	};
-	
-	float4 resolution;
-	
-	float4 colorA;
-	float4 colorB; 
-	float4 colorC; 
-	float4 colorD; 
+		
+	fixed4 colorA;
+	fixed4 colorB; 
+	fixed4 colorC; 
+	fixed4 colorD; 
 	
 	sampler2D _MainTex;
 		
@@ -34,8 +32,8 @@ Shader "Hidden/LensFlareCreate" {
 		return o;
 	}
 	
-	half4 frag(v2f i) : COLOR {
-		half4 color = float4 (0,0,0,0);
+	fixed4 frag(v2f i) : SV_Target {
+		fixed4 color = float4 (0,0,0,0);
 		color += tex2D(_MainTex, i.uv[0] ) * colorA;
 		color += tex2D(_MainTex, i.uv[1] ) * colorB;
 		color += tex2D(_MainTex, i.uv[2] ) * colorC;
@@ -49,11 +47,8 @@ Subshader {
  Blend One One
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
-
-      #pragma fragmentoption ARB_precision_hint_fastest 
 
       #pragma vertex vert
       #pragma fragment frag

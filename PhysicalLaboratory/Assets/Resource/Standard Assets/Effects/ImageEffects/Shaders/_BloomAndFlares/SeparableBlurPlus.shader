@@ -10,7 +10,7 @@ Shader "Hidden/SeparableBlurPlus" {
 	#include "UnityCG.cginc"
 	
 	struct v2f {
-		half4 pos : POSITION;
+		half4 pos : SV_POSITION;
 		half2 uv : TEXCOORD0;
 		half4 uv01 : TEXCOORD1;
 		half4 uv23 : TEXCOORD2;
@@ -37,7 +37,7 @@ Shader "Hidden/SeparableBlurPlus" {
 		return o;  
 	}
 		
-	half4 frag (v2f i) : COLOR {
+	half4 frag (v2f i) : SV_Target {
 		half4 color = half4 (0,0,0,0);
 
 		color += 0.225 * tex2D (_MainTex, i.uv);
@@ -58,10 +58,8 @@ Shader "Hidden/SeparableBlurPlus" {
 Subshader {
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
-      #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vert
       #pragma fragment frag
       ENDCG

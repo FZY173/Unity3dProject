@@ -11,12 +11,12 @@ Shader "Hidden/MultipassHollywoodFlares" {
 	#include "UnityCG.cginc"
 	
 	struct v2f {
-		half4 pos : POSITION;
+		half4 pos : SV_POSITION;
 		half2 uv : TEXCOORD0;
 	};
 
 	struct v2f_opts {
-		half4 pos : POSITION;
+		half4 pos : SV_POSITION;
 		half2 uv[7] : TEXCOORD0;
 	};
 	
@@ -66,14 +66,14 @@ Shader "Hidden/MultipassHollywoodFlares" {
 	}	
 		
 	// deprecated
-	half4 fragPrepare (v2f i) : COLOR {
+	half4 fragPrepare (v2f i) : SV_Target {
 		half4 color = tex2D (_MainTex, i.uv);
 		half4 colorNb = tex2D (_NonBlurredTex, i.uv);
 		return color * tintColor * 0.5 + colorNb * normalize (tintColor) * 0.5;
 	}
 
 
-	half4 fragPreAndCut (v2f_opts i) : COLOR {
+	half4 fragPreAndCut (v2f_opts i) : SV_Target {
 		half4 color = tex2D (_MainTex, i.uv[0]);
 		color += tex2D (_MainTex, i.uv[1]);
 		color += tex2D (_MainTex, i.uv[2]);
@@ -81,10 +81,10 @@ Shader "Hidden/MultipassHollywoodFlares" {
 		color += tex2D (_MainTex, i.uv[4]);
 		color += tex2D (_MainTex, i.uv[5]);
 		color += tex2D (_MainTex, i.uv[6]);
-		return saturate(color / 7.0 - _Threshhold.x) * _Threshhold.y * tintColor;
+		return max(color / 7.0 - _Threshhold.x, 0.0) * _Threshhold.y * tintColor;
 	}
 
-	half4 fragStretch (v2f_opts i) : COLOR {
+	half4 fragStretch (v2f_opts i) : SV_Target {
 		half4 color = tex2D (_MainTex, i.uv[0]);
 		color = max (color, tex2D (_MainTex, i.uv[1]));
 		color = max (color, tex2D (_MainTex, i.uv[2]));
@@ -95,7 +95,7 @@ Shader "Hidden/MultipassHollywoodFlares" {
 		return color;
 	}	
 	
-	half4 fragPost (v2f_opts i) : COLOR {
+	half4 fragPost (v2f_opts i) : SV_Target {
 		half4 color = tex2D (_MainTex, i.uv[0]);
 		color += tex2D (_MainTex, i.uv[1]);
 		color += tex2D (_MainTex, i.uv[2]);
@@ -110,12 +110,10 @@ Shader "Hidden/MultipassHollywoodFlares" {
 	
 Subshader {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off } 
  Pass {     
 
       CGPROGRAM
       
-      #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vert
       #pragma fragment fragPrepare
       
@@ -126,7 +124,6 @@ Subshader {
 
       CGPROGRAM
       
-      #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vertStretch
       #pragma fragment fragStretch
       
@@ -137,7 +134,6 @@ Subshader {
 
       CGPROGRAM
       
-      #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vertVerticalCoords
       #pragma fragment fragPreAndCut
       
@@ -148,7 +144,6 @@ Subshader {
 
       CGPROGRAM
       
-      #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vertVerticalCoords
       #pragma fragment fragPost
       
