@@ -10,12 +10,13 @@ public class Select : MonoBehaviour
     private Dropdown.OptionData[] data ;
     private AudioSource musicCurrt;//当前播放的音乐
     public Slider volume_slider;
+    public GameObject musicGamnObject;
 
     // Start is called before the first frame update
     void Start()
     {
         dpn = transform.GetComponent<Dropdown>();
-        musicCurrt = this.GetComponent<AudioSource>();
+        musicCurrt = musicGamnObject.GetComponent<AudioSource>();
 
         volume_slider.value = 0.5f;
         musicCurrt.clip = music[0];
