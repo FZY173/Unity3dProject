@@ -107,7 +107,7 @@ public class Move : MonoBehaviour
         // Acceleration.Add();
       //  Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)));
       //  Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position));
-        Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position));
+      //  Debug.Log((Math.Pow(speedSecont, 2) - Math.Pow(speedFirst, 2)) / (2 * position));
         // decimal b = Math.Round((decimal)a, 1, MidpointRounding.AwayFromZero);
         //DecimalMath.Pow(val1, val2);
         //Debug.Log(b);

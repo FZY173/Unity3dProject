@@ -8,7 +8,7 @@ public class startReset : MonoBehaviour
     public GameObject car;
     public GameObject pallet;
     public Text text;
-    bool isMove = false;
+    public bool isMove = false;
     public GameObject Rope_x;
     public GameObject Rope_y;
     public GameObject pulley;
@@ -24,11 +24,10 @@ public class startReset : MonoBehaviour
     private Vector3 rope_yScale;
     public float speed = 2f;
     public bool isRotation = false;
-
-
-
-
-
+    public GameObject tire1;
+    public GameObject tire2;
+    public GameObject tire3;
+    public GameObject tire4;
 
     void Start()
     {
@@ -50,6 +49,10 @@ public class startReset : MonoBehaviour
         if (isRotation)
         {
            pulley.transform.Rotate(new Vector3(0, -1, 0) * speed);
+           tire1.transform.Rotate(10*speed * Time.deltaTime, 0, 0);
+           tire2.transform.Rotate(10 * speed * Time.deltaTime, 0, 0);
+           tire3.transform.Rotate(10 * speed * Time.deltaTime, 0, 0);
+           tire4.transform.Rotate(10 * speed * Time.deltaTime, 0, 0);
         }
 
 

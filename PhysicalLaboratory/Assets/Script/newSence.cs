@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class newSence: MonoBehaviour
 {
-    public Button switch_button;
     private bool isSwitch;
     public void LoadNewScene()
     {
@@ -28,6 +27,10 @@ public class newSence: MonoBehaviour
 
     void Update()
     {
-        switch_button.onClick.AddListener(LoadNewScene);
+    }
+
+    public void exit()
+    {
+        Application.Quit();
     }
 }

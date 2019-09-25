@@ -15,7 +15,7 @@ public class openReport : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
             //从鼠标位置发送射线
@@ -24,6 +24,7 @@ public class openReport : MonoBehaviour
            
             if (hit.collider.gameObject.name == "Plane03") {
                 report.SetActive(true);
+                FindObjectOfType<report>().defineBool = true;
             }
         }
     }

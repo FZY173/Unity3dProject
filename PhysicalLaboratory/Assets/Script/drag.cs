@@ -32,18 +32,14 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
-        GameObject.Find("fama-1").transform.position = new Vector3(Screen.width * 9.7f / 10, Screen.height * 8.0f / 10, 0);
-        GameObject.Find("fama-2").transform.position = new Vector3(Screen.width * 9.7f / 10, Screen.height * 6.0f / 10, 0);
-        GameObject.Find("fama-5").transform.position = new Vector3(Screen.width * 9.7f / 10, Screen.height * 4.0f / 10, 0);
-        GameObject.Find("fama-10").transform.position = new Vector3(Screen.width * 9.7f / 10, Screen.height * 2.0f / 10, 0);
+        GameObject.Find("fama-1").transform.position = new Vector3(Screen.width * 9.4994f / 10, Screen.height * 8.0f / 10, 0);
+        GameObject.Find("fama-2").transform.position = new Vector3(Screen.width * 9.4994f / 10, Screen.height * 6.5f / 10, 0);
+        GameObject.Find("fama-5").transform.position = new Vector3(Screen.width * 9.4994f / 10, Screen.height * 5.0f / 10, 0);
+        GameObject.Find("fama-10").transform.position = new Vector3(Screen.width * 9.4994f / 10, Screen.height * 3.0f / 10, 0);
         if (distance.x > -4f && distance.x < -1f && distance.y > -4f && distance.y < -1f && parent.transform.childCount <= 6)
         {
-            if (isShow)
+            if (isShow && !FindObjectOfType<startReset>().isMove)
             {
-
-               // GameObject obj = Instantiate(farmar);
-//obj.transform.parent = parent.transform;
-              //  farmar.transform.position = new Vector3(-1.677f, -1.367f, 1.528f);
 
                 GameObject EnemyObj = GameObject.Instantiate(farmar, famarPosition[Define.currentIndex].transform.position, famarPosition[Define.currentIndex].transform.rotation);
                 EnemyObj.transform.parent = parent.transform;
@@ -59,6 +55,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void Start() {
         distance.x = -2;
+       
     }
     void Update()
     {

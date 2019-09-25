@@ -20,7 +20,7 @@ public class controlData : MonoBehaviour
     {
         chart.ClearData();
         chart.AddData(0, 0, 0);
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < force.Length; i++)
         {
             chart.AddData(0, (float)add[i], (float)force[i]);
         }
